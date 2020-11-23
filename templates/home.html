@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title></title>
+  </head>
+  <body>
+
+      <h1>Welcome from Flask hosted in Elastic Beanstalk!</h1>
+      <h2>Add Task</h2>
+      <form action="/new" method="post">
+        <input type="text" name="task">
+        <input type="submit">
+      </form>
+      <h2>To Do List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>To Do</th>
+            <th>Done?</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for todo in todos %}
+          <tr>
+            <td>{{ todo.id }}</td>
+            <td>{{ todo.task }}</td>
+            <td>{{ todo.done }}</td>
+            <td>
+              <a href="/edit/{{ todo.id }}">Make it done</a>
+              <a href="/delete/{{ todo.id }}">Delete task</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+  </body>
+</html>
