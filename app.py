@@ -3,18 +3,13 @@ from flask import Flask, render_template, redirect, url_for, request
 from models.todos import Todos
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = "secret_key"
+app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY", "secret_key")
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///data.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/")
 def home():
     todos = Todos.find_all()
-
-    if request.method == "post":
-        task = request.form['task']
-        todo = Todos(task, False)
-        todo.save_to_db()
 
     return render_template("home.html", todos=todos)
 
@@ -24,7 +19,7 @@ def new_task():
     task = request.form['task']
     todo = Todos(task, False)
     todo.save_to_db()
-    
+
     return redirect(url_for("home"))
 
 
@@ -53,4 +48,4 @@ if __name__ == "__main__":
     def create_tables():
         db.create_all()
 
-    app.run(debug=True)
+    app.run(port=80, debug=True)
