@@ -20,7 +20,7 @@ def new_task():
     todo = Todos(task, False)
     todo.save_to_db()
 
-    return redirect(url_for("home"))
+    return render_template("success.html")
 
 
 @app.route("/edit/<int:id>")
