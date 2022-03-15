@@ -37,7 +37,7 @@ def delete_task(id):
     task = Todos.find_by_id(id)
     task.delete_from_db()
 
-    return redirect(url_for("home"))
+    return render_template("success.html")
 
 if __name__ == "__main__":
     from db import db
